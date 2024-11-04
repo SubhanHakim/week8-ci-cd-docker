@@ -3,21 +3,20 @@ const request = require('supertest');
 const app = require('../app');
 
 beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+  const url = process.env.MONGODB_URI;
+  await mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 });
 
 afterAll(async () => {
-    await mongoose.connection.close();
+  await mongoose.connection.close();
 });
 
-describe('example test suite', () => {
-    it('example test case', async () => {
-        const response = await request(app).get('/');
-        expect(response.status).toBe(200);
-    });
+describe('Example Test Suite', () => {
+  it('should return 200 OK for GET /', async () => {
+    const response = await request(app).get('/');
+    expect(response.status).toBe(200);
+  });
 });
-
-module.exports = app;
